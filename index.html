@@ -3,94 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lumière Bakery - Handcrafted artisanal pastries and sourdough.">
-    <title>Lumière Bakery | Artisanal Delights</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <meta name="description" content="Lumière - High-performance artisanal bakery.">
+    <title>Lumière | Artisanal Bakery</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CRITICAL CSS (Prevents White Screen) --- */
+        :root {
+            --primary: #c29958;
+            --bg: #fffdfa;
+            --text: #1a1a1a;
+            --surface: #ffffff;
+            --transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        body { 
+            margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); 
+            color: var(--text); overflow-x: hidden;
+        }
+
+        /* Loading Overlay (UX polish) */
+        #loader {
+            position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 253, 250, 0.8); backdrop-filter: blur(20px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 5%; box-sizing: border-box;
+        }
+
+        .logo { font-family: 'Playfair Display'; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+
+        .nav-links span { 
+            margin-left: 2rem; cursor: pointer; font-size: 0.9rem; 
+            font-weight: 500; transition: var(--transition);
+        }
+
+        .nav-links span:hover { color: var(--primary); }
+
+        /* Page System */
+        .page { 
+            display: none; min-height: 100vh; padding-top: 100px;
+            animation: pageIn 0.6s ease forwards;
+        }
+        .page.active { display: block; }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Hero UI */
+        .hero { 
+            text-align: center; padding: 10vh 0; 
+            background: radial-gradient(circle at center, #fff, var(--bg));
+        }
+        h1 { font-family: 'Playfair Display'; font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; }
+        
+        .btn {
+            background: var(--text); color: white; padding: 14px 32px;
+            border-radius: 100px; border: none; font-weight: 500;
+            cursor: pointer; transition: var(--transition);
+        }
+        .btn:hover { background: var(--primary); transform: scale(1.05); }
+
+        /* Grid System (UX Optimized) */
+        .grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 40px; margin-top: 50px;
+        }
+        
+        .item-card { 
+            background: var(--surface); border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: var(--transition);
+        }
+        .item-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        
+        .img-container { aspect-ratio: 4/5; background: #eee; overflow: hidden; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-info { padding: 20px; text-align: center; }
+
+        /* Form Styling */
+        input, textarea {
+            width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #eee;
+            border-radius: 8px; background: #f9f9f9;
+        }
+
+        footer { padding: 50px 0; text-align: center; border-top: 1px solid #eee; margin-top: 100px; }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container nav-content">
-            <a href="#" class="logo">LUMIÈRE</a>
-            <ul class="nav-links">
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#about">Our Story</a></li>
-                <li><a href="#contact" class="btn btn-primary">Order Now</a></li>
-            </ul>
+    <div id="loader">LUMIÈRE</div>
+
+    <nav>
+        <div class="logo" onclick="navigateTo('home')">LUMIÈRE</div>
+        <div class="nav-links">
+            <span onclick="navigateTo('home')">Home</span>
+            <span onclick="navigateTo('menu')">Menu</span>
+            <span onclick="navigateTo('about')">Story</span>
+            <span onclick="navigateTo('contact')">Contact</span>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="carousel">
-            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80')">
-                <div class="hero-text">
-                    <h1>Baked with Heart, Served with Soul.</h1>
-                    <p>Experience the finest French-inspired pastries in the heart of the city.</p>
-                    <a href="#menu" class="btn btn-white">Explore Menu</a>
-                </div>
-            </div>
-            </div>
-    </section>
-
-    <section id="menu" class="section container">
-        <div class="section-header">
-            <span class="subtitle">Our Offerings</span>
-            <h2>Fresh From The Oven</h2>
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="bread">Sourdough</button>
-                <button class="filter-btn" data-filter="pastry">Pastries</button>
-                <button class="filter-btn" data-filter="sweets">Sweets</button>
+    <section id="home" class="page active">
+        <div class="hero container">
+            <h1>Elegance You <br> Can Taste.</h1>
+            <p style="color: #666; margin-bottom: 30px;">Artisanal sourdough and French pastries baked daily.</p>
+            <button class="btn" onclick="navigateTo('menu')">View Collection</button>
+        </div>
+        <div class="container">
+            <div class="img-container" style="border-radius: 30px; margin-top: 40px; aspect-ratio: 16/9;">
+                <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80" alt="Bakery Interior">
             </div>
         </div>
+    </section>
 
-        <div class="grid" id="menu-grid">
-            <div class="card" data-category="bread">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&w=500&q=80" alt="Classic Sourdough" loading="lazy">
+    <section id="menu" class="page">
+        <div class="container">
+            <h2 style="font-family: 'Playfair Display'; font-size: 3rem; text-align: center;">Seasonal Menu</h2>
+            <div class="grid">
+                <div class="item-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&w=600&q=75" alt="Sourdough"></div>
+                    <div class="card-info"><h3>Signature Sourdough</h3><p>$12.00</p></div>
                 </div>
-                <div class="card-body">
-                    <h3>Classic Sourdough</h3>
-                    <p>48-hour fermentation, organic stone-ground flour.</p>
-                    <span class="price">$8.50</span>
+                <div class="item-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=75" alt="Croissant"></div>
+                    <div class="card-info"><h3>Butter Croissant</h3><p>$4.50</p></div>
                 </div>
-            </div>
-            <div class="card" data-category="pastry">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80" alt="Almond Croissant" loading="lazy">
-                </div>
-                <div class="card-body">
-                    <h3>Almond Croissant</h3>
-                    <p>Twice-baked with house-made frangipane.</p>
-                    <span class="price">$5.25</span>
-                </div>
-            </div>
-            <div class="card" data-category="sweets">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1510851171057-047640523455?auto=format&fit=crop&w=500&q=80" alt="Macaron Box" loading="lazy">
-                </div>
-                <div class="card-body">
-                    <h3>Seasonal Macarons</h3>
-                    <p>Box of 6 delicate, hand-painted shells.</p>
-                    <span class="price">$14.00</span>
+                <div class="item-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1510851171057-047640523455?auto=format&fit=crop&w=600&q=75" alt="Macarons"></div>
+                    <div class="card-info"><h3>Vanilla Macaron</h3><p>$3.00</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section bg-light">
-        <div class="container form-container">
-            <h2>Join the Bread List</h2>
-            <p>Get notified when we drop our seasonal specials.</p>
-            <form id="signup-form">
-                <input type="email" placeholder="Enter your email" required id="email">
-                <button type="submit" class="btn btn-primary">Subscribe</button>
+    <section id="about" class="page">
+        <div class="container" style="max-width: 700px; text-align: center;">
+            <h2 style="font-family: 'Playfair Display'; font-size: 3rem;">Our Story</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; color: #444; margin-top: 30px;">
+                Started in a small stone kitchen in 1994, Lumière was built on a single philosophy: 
+                Time is the most important ingredient. We ferment our dough for 48 hours to ensure 
+                perfect texture and deep flavor.
+            </p>
+        </div>
+    </section>
+
+    <section id="contact" class="page">
+        <div class="container" style="max-width: 600px;">
+            <h2 style="font-family: 'Playfair Display'; font-size: 3rem; text-align: center;">Say Hello</h2>
+            <form style="margin-top: 40px;">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <textarea rows="5" placeholder="Your Message"></textarea>
+                <button type="submit" class="btn" style="width: 100%;">Send Message</button>
             </form>
-            <div id="form-message"></div>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Lumière Bakery. Crafted with Excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Loader Logic (Performance UX)
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+        });
+
+        // 2. SPA Router (Zero-Reload Page Swapping)
+        function navigateTo(pageId) {
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Toggle active classes
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+
+            // Update URL hash without reload (SEO/UX friendly)
+            history.pushState(null, null, `#${pageId}`);
+        }
+
+        // 3. Handle Browser Back Button
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.substring(1) || 'home';
+            navigateTo(hash);
+        });
+
+        // 4. Initial Route
+        if(window.location.hash) {
+            navigateTo(window.location.hash.substring(1));
+        }
+    </script>
 </body>
 </html>
